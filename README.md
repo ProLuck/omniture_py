@@ -3,11 +3,10 @@ Omniture_Py
 A Python Library To Access Omniture's SiteCatalyst Reporting API
 ----------------------------------------------------------------------------
 
--------------------------------
-This is a modified fork from https://github.com/RobGoretsky/omniture_py
+<b>This is a modified fork from https://github.com/RobGoretsky/omniture_py.
 I only included the ranked, realtime report and clean the code a litle bit.
-All credits for Rob Goretsky.
-------------------------------
+All credits for Rob Goretsky.</b>
+
 
 This library simplifies the process of accessing the Omniture SiteCatalyst Reporting API by wrapping the REST API calls in a Python library.
 
@@ -33,11 +32,18 @@ To get number of page views for "Homepage" and "Media Guide" combined, yesterday
 print om.get_count_from_report('report_suite_name', 'pageViews', 'page', ["Homepage","Media Guide"])
 ```
 
-To get a Report.QueueRanked run the following. If you want pass more than one element you have to pass a list with a dict for every element like this [{"id": "evar1"}, {"product"}].
+To get a <b>Report.QueueRanked</b> run the following. If you want pass more than one element you have to pass a list with a dict for every element like this [{"id": "evar1"}, {"product"}].
 
 ```python
 data = om.ranked_report('report_suite_name', 'visits', element='browser')
 ```
+
+To get a <b>Report.GetRealTimeReport</b> run the following.
+
+```python
+r = om.real_time_report('report_suite_name', 'revenue')
+```
+
 
 The get_count_from_report function currently supports requesting one dimension (called an 'element') in addition to the date, which is always implied to be included.  It also only currently supports requesting one metric at a time.  If you wish to have lower-level access to the Omniture API than this, you can just use the run_omtr_queue_and_wait_request, and pass it the type of request and full request body.  This will return a Python object.
 

@@ -54,7 +54,7 @@ class Omniture:
         num_retries=0
         while status != 'done' and num_retries < max_retries:
             status_resp = self.request(method, request_data)
-            # Check if is as realtime report and return immediately
+            # Check if is a realtime report and return immediately
             if method == "Report.GetRealTimeReport":
                 return status_resp
             report_id = status_resp['reportID']
@@ -221,10 +221,10 @@ class Omniture:
                         report_suite_id, 
                         metric, 
                         element=None,
-                        period_count="3",
-                        period_minutes="1",
+                        period_count=3,
+                        period_minutes=1,
                         algorithm= "most popular",
-                        period_offset=None,
+                        period_offset=0,
                         algorithm_argument = None,
                         first_rank_period = None,
                         floor_sensitivity = None):
@@ -256,41 +256,21 @@ class Omniture:
                             low-count items from percentage ranking. 
                    
         """
-
-        metrics =  metric
-        
-        if not isinstance(element, list):
-                elements = [{"id": element}]
-        else:
-            elements = element
             
-       # response = self.request_and_wait('Report.GetRealTimeReport',
-       #                                 {"reportDescription":  
-       #                                     {"reportSuiteID": report_suite_id,
-       #                                      "periodCount": period_count,
-       #                                      "periodMinutes": period_minutes,
-       #                                      "periodOffset": period_offset,
-       #                                      "algorithm": algorithm,
-       #                                      "algorithmArgument": algorithm_argument,
-       #                                      "firstRankPeriod": first_rank_period,
-       #                                      "floorSensitivity": floor_sensitivity,
-       #                                      "metrics": metrics, 
-       #                                      "elements" : elements
-       #                                     }})
-                                            
         response = self.request_and_wait('Report.GetRealTimeReport',
                                         {"reportDescription":  
                                             {"reportSuiteID": report_suite_id,
-                                             "periodCount": 3,
-                                             "periodMinutes": 1,
-                                             "periodOffset": 0,
-                                             "algorithm": "most popular",
-                                             "algorithmArgument": None,
-                                             "firstRankPeriod": None,
-                                             "floorSensitivity": None,
-                                             "metrics": metrics, 
-                                             "elements" : elements
+                                             "periodCount": period_count,
+                                             "periodMinutes": period_minutes,
+                                             "periodOffset": period_offset,
+                                             "algorithm": algorithm,
+                                             "algorithmArgument": algorithm_argument,
+                                             "firstRankPeriod": first_rank_period,
+                                             "floorSensitivity": floor_sensitivity,
+                                             "metrics": metric, 
+                                             "elements" : element
                                             }})
+                                            
                                             
         return response['report']['data']
                                         
