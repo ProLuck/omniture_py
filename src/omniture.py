@@ -151,7 +151,10 @@ class Omniture:
             if selected_element_list == None:
                 # Using the first element here since we only support one metric.  
                 # If we want to support more than one metric, would need to handle that here.
-                return int(report["totals"][0])
+                try:
+                    return int(report["totals"][0])
+                except ValueError:
+                    return float(report["totals"][0])
             total_for_selected_elements = 0
             for datum in report["data"]:
                 if datum["name"] in selected_element_list:
